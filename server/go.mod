@@ -3,7 +3,7 @@ module grpcserver
 go 1.23.2
 
 require (
-	github.com/techswarn/protoapi v0.0.0-20241121164233-26df225c5506
+	github.com/Educative-Content/protoapi v0.0.0-20210703173737-454b12c2d01f
 	google.golang.org/grpc v1.68.0
 )
 

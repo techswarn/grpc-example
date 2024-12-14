@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/techswarn/protoapi"
+	"github.com/Educative-Content/protoapi"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
