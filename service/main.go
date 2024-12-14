@@ -9,7 +9,22 @@ import (
 	"fmt"
 	"github.com/Educative-Content/protoapi"
 	"google.golang.org/grpc"
+	"errors"
+	"context"
 )
+
+
+var con *grpc.ClientConn
+
+func init() {
+	port := "0.0.0.0:8080"
+    err := errors.New("err")
+	con, err = grpc.NewClient(port, grpc.WithInsecure())
+	if err != nil {
+		fmt.Println("Dial:", err)
+		return
+	}
+}
 
 func main() {
 	PORT := ":8002"
@@ -37,11 +52,37 @@ func main() {
 }
 
 func getValue(w http.ResponseWriter,req *http.Request) {
+// 		port := "0.0.0.0:8080"
+//     	err := errors.New("err")
+// 		con, err := grpc.NewClient(port, grpc.WithInsecure())
+// //		con, err := grpc.Dial("0.0.0.0:8080", grpc.WithInsecure())
+// 		if err != nil {
+// 			fmt.Println("Dial:", err)
+// 			return
+// 	    }
 		log.Printf("Endpoint: %s", req.URL.Path)
 		
 		if req.URL.Path != "/api/v1/" {
 			http.NotFound(w, req)
 			return
 		}
-		fmt.Fprintf(w, "Welcome to the home page!")
+		client := protoapi.NewRandomClient(con)
+		log.Printf("%#v", client)
+		r, err := AskingDateTime(context.Background(), client)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Println("Server Date and Time:", r.Value)
+
+		fmt.Fprintf(w, r.Value)
+}
+
+func AskingDateTime(ctx context.Context, m protoapi.RandomClient) (*protoapi.DateTime, error) {
+	log.Println("Here")
+	request := &protoapi.RequestDateTime{
+		Value: "Please send me the date and time",
+	}
+
+	return m.GetDate(ctx, request)
 }
