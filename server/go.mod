@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/Educative-Content/protoapi v0.0.0-20210703173737-454b12c2d01f
-	google.golang.org/grpc v1.68.0
+	google.golang.org/grpc v1.66.0
 )
 
 require (
