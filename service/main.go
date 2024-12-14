@@ -17,7 +17,7 @@ import (
 var con *grpc.ClientConn
 
 func init() {
-	port := "http://grpc-server:3000"
+	port := "grpc-server:3000"
     err := errors.New("err")
 	con, err = grpc.NewClient(port, grpc.WithInsecure())
 	if err != nil {
