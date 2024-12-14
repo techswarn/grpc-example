@@ -1,6 +1,6 @@
 module grpcserver
 
-go 1.20
+go 1.22
 
 require (
 	github.com/Educative-Content/protoapi v0.0.0-20210703173737-454b12c2d01f
